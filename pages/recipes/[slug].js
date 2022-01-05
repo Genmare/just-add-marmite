@@ -34,6 +34,16 @@ export async function getStaticProps({ params }) {
         'fields.slug': params.slug, // params.slug : tableau de slug
     });
 
+    // Si le slug est inconnu de contentful
+    if (!items.length) {
+        return {
+            redirect: {
+                destination: '/', // redirection sur la page principale
+                permanent: false, // dit si la redirection sera permanente
+            },
+        };
+    }
+
     return {
         props: { recipe: items[0] },
         revalidate: 1,
